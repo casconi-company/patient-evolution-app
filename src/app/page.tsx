@@ -1,3 +1,20 @@
-export default function Home() {
-  return <div className=""></div>;
+import { getTokens } from "next-firebase-auth-edge";
+import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
+import { serverConfig } from "../../config";
+import { firebaseConfig } from "@/firebase/config";
+
+export default async function Home() {
+  const tokens = await getTokens(await cookies(), {
+    apiKey: firebaseConfig.apiKey,
+    cookieName: serverConfig.cookieName,
+    cookieSignatureKeys: serverConfig.cookieSignatureKeys,
+    serviceAccount: serverConfig.serviceAccount,
+  });
+
+  if (!tokens) {
+    notFound();
+  }
+
+  return <div className="w-full h-full px-4 pt-4"></div>;
 }
