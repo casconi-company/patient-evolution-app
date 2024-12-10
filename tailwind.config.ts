@@ -26,7 +26,19 @@ export default {
           700: "#686868",
         },
         primary: "#1D1D1D",
-        secondary: "#CC6726",
+        secondary: "#8865BA",
+        blue: {
+          50: "#55D0E5",
+        },
+        green: {
+          50: "#4C9B37",
+        },
+        pink: {
+          50: "#D32D8C",
+        },
+        yellow: {
+          50: "#E59C0A",
+        },
         negative: {
           100: "#c25848",
           200: "#bf3e2a",
