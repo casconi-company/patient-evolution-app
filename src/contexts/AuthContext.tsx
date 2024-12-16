@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, getAuth, User } from "firebase/auth";
 import { app } from "@/firebase/config";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase/config"; // Importa o Firestore
 
 const auth = getAuth(app);
 
@@ -24,7 +26,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [userData, setUserData] = useState<UserProps>();
 
   const getUserDatabase = async (uid: string) => {
-    // const userDatabase = await getUserData(uid);
+    const userDatabase = await getUserData(uid);
 
     setUserData({
       isAdmin: userDatabase?.isAdmin!,
@@ -63,4 +65,19 @@ export const useAuth = () => {
   }
 
   return context;
+};
+
+export const getUserData = async (uid: string): Promise<UserProps> => {
+  try {
+    const userDocRef = doc(db, "users", uid);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      return userDoc.data() as UserProps;
+    } else {
+      throw new Error("User not found");
+    }
+  } catch (error) {
+    throw error;
+  }
 };
