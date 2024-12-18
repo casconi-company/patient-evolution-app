@@ -1,9 +1,8 @@
 "use client";
 
-import { Button, Header, Input, Menu } from "@/components";
-import Image from "next/image";
+import { Header } from "@/components";
 
-export default function Login() {
+export default function Register() {
   return (
     <div className="w-full flex justify-center items-center">
       <Header />

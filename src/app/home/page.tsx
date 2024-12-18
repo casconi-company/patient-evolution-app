@@ -1,7 +1,7 @@
 import { Input, PatientCard } from "@/components";
 import { Table } from "@/components/Table";
 
-const myPatients: PatientProps[] = [
+const myPatients: any[] = [
   {
     id: 1,
     name: "John Smith",
