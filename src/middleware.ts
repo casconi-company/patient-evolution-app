@@ -8,14 +8,13 @@ import {
 import { serverConfig } from "../config";
 import { firebaseConfig } from "@/firebase/config";
 
-const PUBLIC_PATHS = ["/sign-up", "/login", "/api/login"];
+const PUBLIC_PATHS = ["/sign-up", "/login", "/api/public/login"];
 
 export function middleware(request: NextRequest) {
-  const isPubclicPath = PUBLIC_PATHS.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  );
+  const { pathname } = request.nextUrl;
 
-  if (isPubclicPath) {
+  // Se a rota estiver na lista de rotas públicas, ignore a autenticação
+  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
     return NextResponse.next();
   }
 
