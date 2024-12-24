@@ -8,9 +8,17 @@ import {
 import { serverConfig } from "../config";
 import { firebaseConfig } from "@/firebase/config";
 
-const PUBLIC_PATHS = ["/sign-up", "/login"];
+const PUBLIC_PATHS = ["/sign-up", "/login", "/api/login"];
 
 export function middleware(request: NextRequest) {
+  const isPubclicPath = PUBLIC_PATHS.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
+
+  if (isPubclicPath) {
+    return NextResponse.next();
+  }
+
   return authMiddleware(request, {
     loginPath: "/api/login",
     logoutPath: "/api/logout",
