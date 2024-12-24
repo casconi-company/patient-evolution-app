@@ -36,7 +36,6 @@ const Input = ({
   error,
   readOnly = false,
   onClick,
-  ref,
 }: InputProps) => {
   const [inputType, setInputType] = useState(type);
 
@@ -68,7 +67,6 @@ const Input = ({
             ? `border-negative-100 focus:border-negative-100`
             : `border-gray-50 focus:border-blue-50`
         }`}
-        ref={ref}
       />
       {type === "password" && (
         <button

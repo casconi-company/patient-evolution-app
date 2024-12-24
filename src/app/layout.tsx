@@ -19,12 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {/* <AuthContextProvider> */}
+      <body className={inter.className} cz-shortcut-listen="true">
         {children}
 
         <ToastContainer position="top-center" />
-        {/* </AuthContextProvider> */}
       </body>
     </html>
   );
