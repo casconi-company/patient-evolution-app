@@ -1,10 +1,10 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, getAuth, User } from "firebase/auth";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+
 import { app } from "@/firebase/config";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/firebase/config"; // Importa o Firestore
+import { getUserData } from "@/firebase/database/users";
 
 const auth = getAuth(app);
 
@@ -65,19 +65,4 @@ export const useAuth = () => {
   }
 
   return context;
-};
-
-export const getUserData = async (uid: string): Promise<UserProps> => {
-  try {
-    const userDocRef = doc(db, "users", uid);
-    const userDoc = await getDoc(userDocRef);
-
-    if (userDoc.exists()) {
-      return userDoc.data() as UserProps;
-    } else {
-      throw new Error("User not found");
-    }
-  } catch (error) {
-    throw error;
-  }
 };

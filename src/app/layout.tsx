@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
+import { Header } from "@/components";
 
 const inter = Montserrat({ subsets: ["latin"] });
 
@@ -20,9 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} cz-shortcut-listen="true">
-        {children}
+        <AuthContextProvider>
+          <Header>{children}</Header>
 
-        <ToastContainer position="top-center" />
+          <ToastContainer position="top-center" />
+        </AuthContextProvider>
       </body>
     </html>
   );
