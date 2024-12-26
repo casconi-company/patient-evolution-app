@@ -69,7 +69,7 @@ const Menu = ({ handleClickMenu, isOpen, handleLogout }: MenuProps) => {
         <div className="w-full opacity-100 mt-8 absolute bottom-3">
           <Button
             text="Sair"
-            className="!bg-red-500 h-8 md:max-w-[160px] w-[130px]"
+            className="!bg-red-500 h-8 md:max-w-[160px] !w-[130px]"
             textStyle="text-sm"
             onClick={handleLogout}
           />

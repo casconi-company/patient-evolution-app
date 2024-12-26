@@ -21,14 +21,6 @@ const Header = ({ children }: PropsWithChildren) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const getTitlePage = () => {
-    if (pathname.includes("/admin")) return "Painel Professor";
-    else {
-      if (pathname.includes("workout")) return "Treinos";
-      else return "Aulas da semana";
-    }
-  };
-
   const handleLogout = async () => {
     try {
       await fetch("/api/logout");
