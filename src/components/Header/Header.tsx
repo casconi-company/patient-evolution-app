@@ -2,16 +2,17 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { PropsWithChildren, useState } from "react";
-import Image from "next/image";
 
 import { ArrowBackIcon, MenuIcon } from "../icons";
 import { Menu } from "../Menu";
+import { useAuth } from "@/contexts/AuthContext";
 
 const notShowHeader = ["/login", "/sign-up"];
 const Header = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const { userData } = useAuth();
 
   const handleBackPage = () => {
     router.back();
@@ -47,7 +48,7 @@ const Header = ({ children }: PropsWithChildren) => {
               </button>
             )} */}
 
-            <p className="text-white font-medium text-lg">
+            <p className="text-white font-medium text-lg md:ml-[270px]">
               CIITA - Evolução do Paciente
             </p>
 
@@ -65,7 +66,13 @@ const Header = ({ children }: PropsWithChildren) => {
           />
         </>
       )}
-      <div className={`${isMenuOpen && `opacity-30`}`}>{children}</div>
+      <div
+        className={`${isMenuOpen && `opacity-30`} ${
+          !!userData && `md:pl-[16rem] flex flex-col items-center`
+        }`}
+      >
+        {children}
+      </div>
     </div>
   );
 };

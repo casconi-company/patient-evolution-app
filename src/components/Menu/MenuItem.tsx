@@ -7,10 +7,7 @@ export interface MenuItemProps {
 const MenuItem = ({ text, href, isActive }: MenuItemProps) => {
   return (
     <li className="mt-2 text-md">
-      <a
-        href={href}
-        className={`${isActive ? "text-secondary" : "text-white"}`}
-      >
+      <a href={href} className={`${isActive ? "text-blue-50" : "text-white"}`}>
         {text}
       </a>
     </li>

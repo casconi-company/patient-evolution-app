@@ -51,7 +51,7 @@ const Menu = ({ handleClickMenu, isOpen, handleLogout }: MenuProps) => {
         </ul>
         {userData?.isAdmin && (
           <>
-            <p className="text-gray-500 font-medium text-md mt-4">
+            <p className="text-green-50 font-medium text-md mt-4">
               Administrador
             </p>
 
