@@ -3,6 +3,7 @@ declare type SignUpFormProps = {
   email: string;
   password: string;
   confirmPassword: string;
+  isAdmin: boolean;
 };
 
 declare type LoginFormProps = {

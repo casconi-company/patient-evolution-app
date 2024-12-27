@@ -1,5 +1,6 @@
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/firebase/config";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db, auth } from "@/firebase/config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export const getUserData = async (uid: string) => {
   try {
@@ -11,6 +12,25 @@ export const getUserData = async (uid: string) => {
     } else {
       throw new Error("User not found");
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createUser = async (user: SignUpFormProps) => {
+  try {
+    let result = null;
+
+    result = await createUserWithEmailAndPassword(
+      auth,
+      user.email,
+      user.password
+    );
+    await setDoc(doc(db, "users", result.user.uid), {
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
   } catch (error) {
     console.log(error);
   }
