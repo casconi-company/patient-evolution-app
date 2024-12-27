@@ -30,19 +30,21 @@ export default function Register() {
 
   const isUserAdmin = watch("isAdmin");
 
-  const handleSignUpUser = async (values: LoginFormProps) => {
+  const handleSignUpUser = async (values: SignUpFormProps) => {
     const responseSignUpUser = await fetch("api/register", {
       method: "POST",
       body: JSON.stringify({
+        name: values.name,
         email: values.email,
         password: values.password,
+        isAdmin: values.isAdmin,
       }),
     });
 
     if (responseSignUpUser.ok) {
       router.push("/users");
     } else {
-      toast.error("Ocorreu um erro ao logar com seu usuário!");
+      toast.error("Ocorreu um erro ao cadastrar novo usuário!");
     }
   };
 
