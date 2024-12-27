@@ -1,4 +1,5 @@
-import { PatientCard } from "@/components";
+import { Input, PatientCard } from "@/components";
+import { Table } from "@/components/Table";
 
 const myPatients: PatientProps[] = [
   {
@@ -43,9 +44,20 @@ const myPatients: PatientProps[] = [
   },
 ];
 
+const tableColumns = [
+  { key: "name", name: "Nome" },
+  { key: "birthdate", name: "Data de nascimento" },
+  { key: "clinicName", name: "Clínica" },
+  { key: "therapistName", name: "Terapeuta" },
+  { key: "updatedAt", name: "atualizado em" },
+];
+
 export default function Home() {
   return (
-    <div className="w-full h-full p-6 lg:max-w-[800px]">
+    <div className="w-full h-full p-6 lg:max-w-[1000px]">
+      <p className="text-white text-2xl text-center mb-4">Meus pacientes</p>
+      <Input name="filter" placeholder="Nome do paciente" />
+
       {myPatients.map((item, index) => (
         <PatientCard key={index} data={item} />
       ))}

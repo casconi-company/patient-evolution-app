@@ -41,6 +41,7 @@ const PatientCard = ({ data, isShowTherapist = false }: PatientCardProps) => {
         <Image
           alt={data.clinicName}
           src="/CIITA_PIP.png"
+          className="max-md:w-[120px] max-sm:h-[80px]"
           width={140}
           height={80}
         />
