@@ -51,7 +51,7 @@ export default function Login() {
   };
 
   return (
-    <div className="w-full px-4 pt-4 flex justify-center items-center h-full bg-gradient-to-r from-gray-800 to-gray-700 max-sm:pb-20 max-sm:pt-10 max-sm:overflow-auto">
+    <div className="w-full px-4 pt-4 flex justify-center items-center h-screen bg-gradient-to-r from-gray-800 to-gray-700 max-sm:pb-20 max-sm:pt-10 max-sm:overflow-auto">
       <div className="flex w-full h-full max-sm:h-auto justify-around flex-col md:flex-row items-center">
         <div className="flex flex-col justify-center items-center">
           <div className="mt-24 max-sm:mt-20">
