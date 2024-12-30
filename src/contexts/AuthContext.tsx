@@ -1,15 +1,25 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 
-import { auth } from "@/firebase/config";
 import { getUserData } from "@/firebase/database/users";
+import { app } from "@/firebase/config";
+
+const auth = getAuth(app);
 
 interface AuthContextProps {
   userFirebase: User | null;
   userData?: UserProps | null;
   loading: boolean;
+  setUserData?: Dispatch<SetStateAction<UserProps | undefined>>;
 }
 
 export const AuthContext = createContext<AuthContextProps | undefined>(
@@ -34,22 +44,29 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUserFirebase(user);
-        getUserDatabase(user.uid);
-      } else {
-        setUserFirebase(null);
-      }
+    const unsubscribe = onAuthStateChanged(
+      auth!,
+      (user) => {
+        if (user) {
+          setUserFirebase(user);
+          getUserDatabase(user.uid);
+        } else {
+          console.log("usuário não autenticado");
+          setUserFirebase(null);
+        }
 
-      setLoading(false);
-    });
+        setLoading(false);
+      },
+      (error) => console.log(error)
+    );
 
     return () => unsubscribe();
-  }, []);
+  }, [auth]);
 
   return (
-    <AuthContext.Provider value={{ userFirebase, userData, loading }}>
+    <AuthContext.Provider
+      value={{ userFirebase, userData, loading, setUserData }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -28,28 +28,30 @@ export default function Register() {
     resolver: zodResolver(signUpSchema),
   });
 
+  register("isAdmin");
   const isUserAdmin = watch("isAdmin");
 
   const handleSignUpUser = async (values: SignUpFormProps) => {
-    const responseSignUpUser = await fetch("api/register", {
+    console.log(values);
+    const responseSignUpUser = await fetch("/api/register", {
       method: "POST",
       body: JSON.stringify({
         name: values.name,
         email: values.email,
         password: values.password,
-        isAdmin: values.isAdmin,
+        isAdmin: values.isAdmin || false,
       }),
     });
 
     if (responseSignUpUser.ok) {
-      router.push("/users");
+      router.push("/admin/users");
     } else {
       toast.error("Ocorreu um erro ao cadastrar novo usuário!");
     }
   };
 
   return (
-    <div className="w-full px-4 pt-4 flex justify-center items-center h-full max-sm:pb-20 max-sm:pt-10 max-sm:overflow-auto lg:px-8 md:w-[1000px]">
+    <div className="w-full px-4 pt-4 flex justify-center items-center h-full max-sm:pb-20 max-sm:pt-10 max-sm:overflow-auto md:px-10 lg:px-8 min-md:w-[1000px]">
       <div className="flex w-full h-full max-sm:h-auto justify-around flex-col md:flex-row items-center">
         <form onSubmit={handleSubmit(handleSignUpUser)} className="w-full">
           <p className="text-center mb-5 text-green-50">
