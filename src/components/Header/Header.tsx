@@ -12,7 +12,7 @@ const Header = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const { userData } = useAuth();
+  const { userData, setUserData } = useAuth();
 
   const handleBackPage = () => {
     router.back();
@@ -24,7 +24,9 @@ const Header = ({ children }: PropsWithChildren) => {
 
   const handleLogout = async () => {
     try {
-      await fetch("/api/logout");
+      await fetch("api/logout", {
+        method: "GET",
+      });
 
       setIsMenuOpen(false);
       router.replace("/login");
@@ -68,7 +70,8 @@ const Header = ({ children }: PropsWithChildren) => {
       )}
       <div
         className={`${isMenuOpen && `opacity-30`} ${
-          !!userData && `md:pl-[16rem] flex flex-col items-center`
+          !pathname.includes("/login") &&
+          `md:pl-[16rem] flex flex-col items-center`
         }`}
       >
         {children}

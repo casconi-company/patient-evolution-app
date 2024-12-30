@@ -5,7 +5,7 @@ import { serverConfig } from "../../config";
 import { firebaseConfig } from "@/firebase/config";
 
 export default async function Home() {
-  const tokens = await getTokens(await cookies(), {
+  const tokens = await getTokens(cookies(), {
     apiKey: firebaseConfig.apiKey,
     cookieName: serverConfig.cookieName,
     cookieSignatureKeys: serverConfig.cookieSignatureKeys,

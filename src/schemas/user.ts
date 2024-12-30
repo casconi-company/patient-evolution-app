@@ -4,6 +4,7 @@ export const signUpSchema = z
   .object({
     name: z.string(),
     email: z.string().email(),
+    isAdmin: z.boolean(),
     password: z
       .string()
       .min(8, { message: "A senha deve conter 8 caracteres" }),

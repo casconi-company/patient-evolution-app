@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 import { Button, Input } from "@/components";
 import { loginSchema } from "@/schemas/user";
+import { signIn } from "@/firebase/auth/Authentication";
 
 export default function Login() {
   const router = useRouter();
@@ -25,28 +26,30 @@ export default function Login() {
   });
 
   const handleSignInUser = async (values: LoginFormProps) => {
-    const responsePostLogin = await fetch("api/public/login", {
-      method: "POST",
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password,
-      }),
-    });
-
-    if (responsePostLogin.ok) {
-      const data = await responsePostLogin.json();
-
-      if (!!data.token) {
-        await fetch("api/login", {
-          headers: {
-            Authorization: `Bearer ${data.token}`,
-          },
-        });
-
-        return router.push("/");
+    try {
+      if (!values.email || !values.password) {
+        toast.error("Necessário preencher os campos de email e senha!");
+        return;
       }
-    } else {
-      toast.error("Ocorreu um erro ao logar com seu usuário!");
+
+      const { result, error } = await signIn(values.email, values.password);
+
+      if (!!error) {
+        toast.error("Seu email ou senha estão incorretos!");
+      } else {
+        const token = await result?.user?.getIdToken();
+
+        if (!!token) {
+          await fetch("api/login", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          return router.push("/");
+        }
+      }
+    } catch (error) {
+      toast.error("Ocorreu um erro ao realizar seu login!");
     }
   };
 

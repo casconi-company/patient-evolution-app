@@ -1,6 +1,9 @@
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { db, auth } from "@/firebase/config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { app } from "../config";
+
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 export const getUserData = async (uid: string) => {
   try {
@@ -22,10 +25,11 @@ export const createUser = async (user: SignUpFormProps) => {
     let result = null;
 
     result = await createUserWithEmailAndPassword(
-      auth,
+      auth!,
       user.email,
       user.password
     );
+
     await setDoc(doc(db, "users", result.user.uid), {
       name: user.name,
       email: user.email,
