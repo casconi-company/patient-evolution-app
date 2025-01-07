@@ -2,7 +2,6 @@ import { getUserData } from "@/firebase/database/users";
 
 export async function GET(req: Request, route: { params: { id: string } }) {
   const { id } = route.params;
-  console.log(id);
   if (typeof id !== "string") {
     return new Response(JSON.stringify({ message: "Invalid User ID" }), {
       status: 400,
@@ -11,7 +10,6 @@ export async function GET(req: Request, route: { params: { id: string } }) {
 
   try {
     const userData = await getUserData(id);
-    console.log(userData);
     if (!userData) {
       return new Response(JSON.stringify({ message: "User not found" }), {
         status: 400,
