@@ -3,6 +3,22 @@ declare type PatientProps = {
   name: string;
   birthdate: string;
   updatedAt: string;
-  clinicName: string;
-  therapistName: string;
+  clinicId: string;
+  therapistId: string;
+  documentNumber: string;
+  clinicName?: string;
+  therapistName?: string;
+};
+
+declare type PatientFormProps = {
+  name: string;
+  cpf: string;
+  birthdate: string;
+  clinicId: string;
+  documentNumber: string;
+};
+
+declare type OptionProp = {
+  id: string;
+  label: string;
 };
