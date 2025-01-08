@@ -2,6 +2,7 @@
 
 import React, { RefObject, useState } from "react";
 import { EyeHideIcon, EyeIcon } from "../icons";
+import { useInputMask } from "@code-forge/react-input-mask";
 
 const containerPropsDefault = "w-full h-auto relative";
 
@@ -20,6 +21,7 @@ export interface InputProps {
   readOnly?: boolean;
   onClick?: () => void;
   ref?: RefObject<any>;
+  mask?: string;
 }
 
 const Input = ({
@@ -36,8 +38,12 @@ const Input = ({
   error,
   readOnly = false,
   onClick,
+  mask,
 }: InputProps) => {
   const [inputType, setInputType] = useState(type);
+  const { getInputProps } = useInputMask({
+    mask: mask,
+  });
 
   const handleInputTypePassword = () => {
     setInputType(inputType === "password" ? "text" : "password");
@@ -67,6 +73,7 @@ const Input = ({
             ? `border-negative-100 focus:border-negative-100`
             : `border-gray-50 focus:border-blue-50`
         }`}
+        {...getInputProps()}
       />
       {type === "password" && (
         <button
