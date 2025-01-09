@@ -14,6 +14,6 @@ declare type LoginFormProps = {
 declare type UserProps = {
   name: string;
   email?: string;
-  isAdmin?: boolean;
+  isAdmin?: boolean | string;
   uid?: string;
 };

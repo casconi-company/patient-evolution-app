@@ -11,6 +11,8 @@ import {
   getDocs,
   QueryDocumentSnapshot,
   DocumentData,
+  where,
+  getCountFromServer,
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { app } from "../config";
@@ -36,13 +38,26 @@ export const getUserData = async (uid: string) => {
   }
 };
 
+// GET TOTAL USERS
+export const getTotalUsersCount = async (): Promise<number> => {
+  const usersCollection = collection(db, "users");
+  const snapshot = await getCountFromServer(usersCollection);
+  return snapshot.data().count;
+};
+
 //GET LIST
 export const getUserList = async (
-  lastVisible: QueryDocumentSnapshot<DocumentData> | null,
-  pageSize: number
-): Promise<UserProps[]> => {
+  pageSize: number,
+  lastVisible?: QueryDocumentSnapshot<DocumentData> | null,
+  filter?: string
+): Promise<{
+  users: UserProps[];
+  total: number;
+  lastVisibleDoc: QueryDocumentSnapshot<DocumentData> | null;
+}> => {
   const usersCollection = collection(db, "users");
-  const usersQuery = lastVisible
+
+  const usersQuery = !!lastVisible
     ? query(
         usersCollection,
         orderBy("name"),
@@ -60,11 +75,19 @@ export const getUserList = async (
       name: data.name,
       email: data.email,
       isAdmin: data.isAdmin,
-      uid: data.uid,
+      uid: doc.id,
     });
   });
 
-  return usersData;
+  const lastVisibleDoc = snapshot.docs[snapshot.docs.length - 1];
+
+  const totalUsers = await getTotalUsersCount();
+
+  return {
+    users: usersData,
+    total: totalUsers,
+    lastVisibleDoc,
+  };
 };
 
 //*************************************FUNC POST
