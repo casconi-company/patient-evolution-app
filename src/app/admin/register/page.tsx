@@ -32,7 +32,6 @@ export default function Register() {
   const isUserAdmin = watch("isAdmin");
 
   const handleSignUpUser = async (values: SignUpFormProps) => {
-    console.log(values);
     const responseSignUpUser = await fetch("/api/register", {
       method: "POST",
       body: JSON.stringify({
@@ -51,7 +50,7 @@ export default function Register() {
   };
 
   return (
-    <div className="w-full px-4 pt-4 flex justify-center items-center h-full max-sm:pb-20 max-sm:pt-10 max-sm:overflow-auto md:px-10 lg:px-8 min-md:w-[1000px]">
+    <div className="w-full md:max-w-[1000px] px-4 pt-4 flex justify-center items-center h-full max-sm:pb-20 max-sm:pt-10 max-sm:overflow-auto md:px-10 lg:px-8 min-md:w-[1000px]">
       <div className="flex w-full h-full max-sm:h-auto justify-around flex-col md:flex-row items-center">
         <form onSubmit={handleSubmit(handleSignUpUser)} className="w-full">
           <p className="text-center mb-5 text-green-50">

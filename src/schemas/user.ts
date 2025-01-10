@@ -21,3 +21,8 @@ export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
+
+export const editUserSchema = z.object({
+  name: z.string(),
+  isAdmin: z.boolean(),
+});
