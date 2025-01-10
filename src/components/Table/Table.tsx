@@ -8,13 +8,7 @@ interface TableProps {
   onChangePage?: () => void;
   isLoading?: boolean;
 }
-const Table = ({
-  columns,
-  data,
-  total,
-  onChangePage,
-  isLoading,
-}: TableProps) => {
+const Table = ({ columns, data, onChangePage, isLoading }: TableProps) => {
   return (
     <div className="relative overflow-x-auto">
       {isLoading ? (
@@ -53,17 +47,6 @@ const Table = ({
               ))}
           </tbody>
         </table>
-      )}
-
-      {data?.length! < total! && (
-        <div className="w-full flex justify-center">
-          <Button
-            text="Carregar mais"
-            className="!bg-yellow-50 !h-10 md:w-[200px]"
-            textStyle="text-sm "
-            onClick={onChangePage}
-          />
-        </div>
       )}
     </div>
   );

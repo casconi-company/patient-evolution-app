@@ -22,6 +22,7 @@ export interface InputProps {
   onClick?: () => void;
   ref?: RefObject<any>;
   mask?: string;
+  onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 const Input = ({
@@ -39,6 +40,7 @@ const Input = ({
   readOnly = false,
   onClick,
   mask,
+  onKeyDown,
 }: InputProps) => {
   const [inputType, setInputType] = useState(type);
   const { getInputProps } = useInputMask({
@@ -67,6 +69,7 @@ const Input = ({
         readOnly={readOnly}
         onChange={onChange}
         onClick={onClick}
+        onKeyDown={onKeyDown}
         {...(!!register && { ...register(name) })}
         className={`block w-full rounded-lg border bg-primary p-3 text-white  focus:outline-transparent focus:outline-0 ${inputStyle} ${
           !!error
