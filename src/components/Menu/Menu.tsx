@@ -40,7 +40,11 @@ const Menu = ({ handleClickMenu, isOpen, handleLogout }: MenuProps) => {
 
       <div className="mt-2 px-4 opacity-100">
         <ul>
-          <MenuItem text="Início" href="/" isActive={pathname === "/"} />
+          <MenuItem
+            text="Meus pacientes"
+            href="/my-patients"
+            isActive={pathname === "/my-patients"}
+          />
           <MenuItem
             text="Pacientes"
             href="/patients"
