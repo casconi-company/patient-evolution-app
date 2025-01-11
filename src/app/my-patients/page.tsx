@@ -6,7 +6,7 @@ import { useState } from "react";
 
 type FilterProps = { name?: string; cpf?: string };
 
-export default function Patients() {
+export default function MyPatients() {
   const router = useRouter();
   const [patientsData, setPatientsData] = useState<PatientProps[]>([]);
   const [lastVisible, setLastVisible] = useState<any>(null);
@@ -44,14 +44,8 @@ export default function Patients() {
     <div className="w-full px-4 pt-4 flex flex-col justify-center items-center h-full max-sm:pb-20 max-sm:pt-4 max-sm:overflow-auto lg:px-8 min-md:w-[1000px]">
       <div className="w-full flex flex-row justify-between items-center max-md:flex-col">
         <h2 className="text-white text-2xl text-center max-md:mb-4">
-          Pacientes
+          Meus Pacientes
         </h2>
-
-        <Button
-          className="!w-[250px] max-md:!w-full"
-          text="Cadastrar novo paciente"
-          onClick={() => router.push("/patients/create")}
-        />
       </div>
 
       <div className="mt-4 w-full flex flex-row max-md:flex-col">
@@ -59,6 +53,7 @@ export default function Patients() {
           placeholder="Nome do paciente"
           containerProps="mr-4 !w-[70%] max-md:!w-full"
           label="Nome"
+          value={filters?.name}
           onChange={(event) =>
             setFilters((filter) => ({ ...filter, name: event.target.value }))
           }
@@ -70,8 +65,9 @@ export default function Patients() {
           containerProps="!w-[25%] max-md:mt-4 max-md:!w-[50%] mr-4"
           label="CPF"
           mask="999.999.999-99"
+          value={filters?.cpf}
           onChange={(event) =>
-            setFilters((filter) => ({ ...filter, name: event.target.value }))
+            setFilters((filter) => ({ ...filter, cpf: event.target.value }))
           }
           onKeyDown={handleKeyPressDown}
         />
@@ -94,7 +90,7 @@ export default function Patients() {
       </div>
 
       {!patientsData?.length && !isLoading && (
-        <p className="mt-10">Não há pacientes cadastrados</p>
+        <p className="mt-10">Não possui pacientes!</p>
       )}
 
       {isLoading ? (

@@ -1,6 +1,6 @@
 import { getTokens } from "next-firebase-auth-edge";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { serverConfig } from "../../config";
 import { firebaseConfig } from "@/firebase/config";
 
@@ -16,5 +16,5 @@ export default async function Home() {
     notFound();
   }
 
-  return <div className="w-full h-full px-4 pt-4"></div>;
+  redirect("/my-patients");
 }

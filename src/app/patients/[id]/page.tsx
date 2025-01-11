@@ -27,7 +27,7 @@ export default function DetailsPatient() {
           </h1>
 
           <div className="flex flex-row items-center max-md:mt-4 flex-wrap max-md:justify-center">
-            <div className="flex flex-col">
+            <div className="flex flex-col mr-4">
               <Button
                 className="h-10 w-40 mb-4 mr-4"
                 textStyle="text-xs"
@@ -41,7 +41,7 @@ export default function DetailsPatient() {
                 text="Alterar diagnóstico"
               />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col mr-4">
               <Button
                 className="!bg-blue-50 mr-4 h-10 w-40 mb-4"
                 textStyle="text-xs"
