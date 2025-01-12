@@ -1,5 +1,5 @@
 declare type PatientProps = {
-  id: number;
+  id?: string;
   name: string;
   birthdate: string;
   updatedAt: string;
