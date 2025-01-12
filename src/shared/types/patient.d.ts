@@ -22,3 +22,12 @@ declare type OptionProp = {
   id: string;
   label: string;
 };
+
+declare type EvolutionFormProps = {
+  date: string;
+  time: string;
+  evolution: string;
+  therapistId: string;
+  file?: File;
+  therapistName?: string;
+};

@@ -8,3 +8,4 @@ export * from "./Table";
 export * from "./Switch";
 export * from "./Select";
 export * from "./Modal";
+export * from "./Textarea";
