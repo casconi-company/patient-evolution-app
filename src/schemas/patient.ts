@@ -6,3 +6,9 @@ export const patientSchema = z.object({
   birthdate: z.string(),
   clinicId: z.string(),
 });
+
+export const evolutionPatientSchema = z.object({
+  date: z.string(),
+  time: z.string(),
+  evolution: z.string(),
+});
