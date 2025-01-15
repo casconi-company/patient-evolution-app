@@ -20,21 +20,22 @@ export default function CreatePacient() {
       name: "",
       cpf: "",
       birthdate: "",
-      clinicId: "",
+      clinic: "",
       documentNumber: "",
     },
     resolver: zodResolver(patientSchema),
   });
 
-  const handleSignUpUser = async (values: PatientFormProps) => {
-    console.log(values);
-    const responseSignUpUser = await fetch("/api/register", {
+  const handleCreatePatient = async (values: PatientFormProps) => {
+    const responseRegisterPatient = await fetch("/api/patient", {
       method: "POST",
-      body: JSON.stringify({}),
+      body: JSON.stringify({ ...values }),
     });
 
-    if (responseSignUpUser.ok) {
-      router.push("/admin/users");
+    if (responseRegisterPatient.ok) {
+      const { data } = await responseRegisterPatient.json();
+      toast.success("Paciente cadastrado com sucesso!");
+      router.push(`/patients/${data.uid}`);
     } else {
       toast.error("Ocorreu um erro ao cadastrar novo usuário!");
     }
@@ -43,7 +44,7 @@ export default function CreatePacient() {
   return (
     <div className="w-full px-4 pt-4 flex justify-center items-center h-full max-sm:pb-20 max-sm:pt-10 max-sm:overflow-auto md:px-10 lg:px-8 min-md:w-[1000px]">
       <div className="flex w-full h-full max-sm:h-auto justify-around flex-col md:flex-row items-center">
-        <form onSubmit={handleSubmit(handleSignUpUser)} className="w-full">
+        <form onSubmit={handleSubmit(handleCreatePatient)} className="w-full">
           <p className="text-center mb-5 text-green-50">
             Cadastrar novo paciente
           </p>
@@ -97,11 +98,11 @@ export default function CreatePacient() {
               <Select
                 label="Clinica"
                 placeholder="Clinica"
-                error={!!errors?.clinicId?.message}
-                message={errors.clinicId?.message}
+                error={!!errors?.clinic?.message}
+                message={errors.clinic?.message}
                 options={clinicListOptions}
                 register={register}
-                name="clinicId"
+                name="clinic"
               />
             </div>
           </div>

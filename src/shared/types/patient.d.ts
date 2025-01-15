@@ -1,21 +1,25 @@
 declare type PatientProps = {
-  id?: string;
+  uid?: string;
   name: string;
   birthdate: string;
-  updatedAt: string;
-  clinicId: string;
+  createdAt: string;
+  clinic: string;
+  cpf: string;
   therapistId: string;
-  documentNumber: string;
+  documentNumber?: string;
   clinicName?: string;
   therapistName?: string;
+  diagnostic?: string;
+  updatedAt?: string;
 };
 
 declare type PatientFormProps = {
   name: string;
   cpf: string;
   birthdate: string;
-  clinicId: string;
+  clinic: string;
   documentNumber: string;
+  createdAt?: string;
 };
 
 declare type OptionProp = {
