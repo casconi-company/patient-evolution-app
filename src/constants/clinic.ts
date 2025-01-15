@@ -1,14 +1,14 @@
 export const clinicListOptions = [
   {
-    id: "1",
+    id: "ciita_pip",
     label: "CIITA-PIP",
   },
   {
-    id: "2",
+    id: "ciita_plus",
     label: "CIITA+",
   },
   {
-    id: "3",
+    id: "ciita",
     label: "CIITA",
   },
 ];

@@ -115,6 +115,39 @@ export const getUserList = async (
   }
 };
 
+//GET OPTIONS LIST
+export const getUserOptionList = async (): Promise<
+  | {
+      users: UserProps[];
+    }
+  | undefined
+> => {
+  try {
+    const usersCollection = collection(db, "users");
+
+    const usersQuery = query(usersCollection, orderBy("name"));
+
+    const snapshot = await getDocs(usersQuery);
+
+    const usersData: UserProps[] = [];
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      usersData.push({
+        name: data.name,
+        email: data.email,
+        isAdmin: data.isAdmin,
+        uid: doc.id,
+      });
+    });
+
+    return {
+      users: usersData,
+    };
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 //*************************************FUNC POST
 export const createUser = async (user: SignUpFormProps) => {
   try {

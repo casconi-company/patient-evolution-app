@@ -6,12 +6,33 @@ import { Select } from "../Select";
 import Modal from "./Modal";
 import { useForm } from "react-hook-form";
 
-const ModalClinic = ({ setOpenModal }: ModalWithFormProps) => {
-  const { register } = useForm<{ clinic: string }>();
+type ClinicFormProps = {
+  clinic: string;
+};
+
+const ModalClinic = ({
+  setOpenModal,
+  onChangeValue,
+  currentValue,
+}: ModalWithFormProps<string>) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<ClinicFormProps>();
+
+  const handleSubmitClinic = async (value: ClinicFormProps) => {
+    try {
+      await onChangeValue?.(value.clinic);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Modal onCloseModal={() => setOpenModal(false)} title="Alterar a clínica">
       <div className="w-full px-10 pt-4 pb-10">
-        <form>
+        <form onSubmit={handleSubmit(handleSubmitClinic)}>
           <p className="mb-4">
             Alterar a clínica que este paciente está realizando os atendimentos
           </p>
@@ -20,10 +41,16 @@ const ModalClinic = ({ setOpenModal }: ModalWithFormProps) => {
             name="clinic"
             register={register}
             placeholder="Clínica"
+            value={currentValue}
             isModal
           />
 
-          <Button text="Confirmar clínica" type="submit" className="mt-4" />
+          <Button
+            text="Confirmar clínica"
+            type="submit"
+            className="mt-4"
+            loading={isSubmitting}
+          />
         </form>
       </div>
     </Modal>

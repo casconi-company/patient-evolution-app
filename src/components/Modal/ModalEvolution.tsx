@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { evolutionPatientSchema } from "@/schemas/patient";
 
-interface ModalEvolution extends ModalWithFormProps {
+interface ModalEvolution extends ModalWithFormProps<string> {
   uid: string;
   name: string;
   clinic: string;
