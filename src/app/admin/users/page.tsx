@@ -168,7 +168,7 @@ export default function Users() {
       <div className="w-full flex flex-row justify-between">
         <h2 className="text-white text-2xl">Usuários</h2>
         <Button
-          className="!w-[250px] lg:!w-[250px]"
+          className="!w-[250px]"
           text="Cadastrar novo usuário"
           onClick={() => router.push("/admin/register")}
         />
@@ -181,7 +181,7 @@ export default function Users() {
         />
         <Button
           text="Pesquisar"
-          className="w-[140px] ml-4 !bg-blue-50"
+          className="!w-[140px] ml-4 !bg-blue-50"
           onClick={handleChangeFilter}
         />
       </div>

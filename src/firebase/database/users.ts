@@ -13,6 +13,7 @@ import {
   DocumentData,
   where,
   getCountFromServer,
+  updateDoc,
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { app } from "../config";
@@ -163,6 +164,20 @@ export const createUser = async (user: SignUpFormProps) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//*************************************FUNC USER
+//PUT USER
+export const updateUser = async (uid: string, data: EditUserProps) => {
+  try {
+    const userDocRef = doc(db, "users", uid);
+
+    await updateDoc(userDocRef, {
+      ...data,
     });
   } catch (error) {
     console.log(error);
