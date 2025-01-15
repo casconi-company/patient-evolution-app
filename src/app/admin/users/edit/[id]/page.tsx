@@ -31,9 +31,9 @@ export default function EditUser() {
   register("isAdmin");
   const isUserAdmin = watch("isAdmin");
 
-  const handleSignUpUser = async (values: EditUserProps) => {
+  const handleSubmitEditUser = async (values: EditUserProps) => {
     const responseEditUser = await fetch(`/api/user/${params.id}`, {
-      method: "PATCH",
+      method: "PUT",
       body: JSON.stringify({
         name: values.name,
         isAdmin: values.isAdmin || false,
@@ -74,7 +74,10 @@ export default function EditUser() {
         </div>
       ) : (
         <div className="flex w-full h-full max-sm:h-auto justify-around flex-col md:flex-row items-center">
-          <form onSubmit={handleSubmit(handleSignUpUser)} className="w-full">
+          <form
+            onSubmit={handleSubmit(handleSubmitEditUser)}
+            className="w-full"
+          >
             <p className="text-center mb-5 text-green-50">Editar usuário</p>
             <div className="mb-5 w-full">
               <Input
