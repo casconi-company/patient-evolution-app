@@ -14,15 +14,8 @@ export const addEvolution = async (
   id: string
 ): Promise<EvolutionFormProps> => {
   try {
-    const fileName = uuidv4();
     const evolutionId = uuidv4();
-
-    if (evolution.file) {
-      const tempFilePath = path.join(process.cwd(), "temp", fileName);
-      fs.writeFileSync(tempFilePath, evolution.file);
-
-      await uploadFile(tempFilePath, fileName);
-    }
+    const fileName = evolution.fileId!;
 
     const evolutionData: EvolutionFormProps = {
       ...evolution,
@@ -35,6 +28,6 @@ export const addEvolution = async (
     return evolutionData;
   } catch (error) {
     console.error("Erro ao adicionar evolução:", error);
-    throw new Error("Erro ao gravar evolução no banco de dados.");
+    throw new Error("Erro ao gravar evolução no banco de dados." + error);
   }
 };

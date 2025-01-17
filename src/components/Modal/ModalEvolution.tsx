@@ -6,8 +6,10 @@ import { Input } from "../Input";
 import { Textarea } from "../Textarea";
 import Modal from "./Modal";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { evolutionPatientSchema } from "@/schemas/patient";
+import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { v4 as uuidv4 } from "uuid";
 
 interface ModalEvolution extends ModalWithFormProps<string> {
   uid: string;
@@ -16,7 +18,7 @@ interface ModalEvolution extends ModalWithFormProps<string> {
   userId?: string;
 }
 
-const ModalClinic = ({
+const ModalEvolution = ({
   setOpenModal,
   uid,
   name,
@@ -25,15 +27,9 @@ const ModalClinic = ({
 }: ModalEvolution) => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
-  } = useForm<{
-    evolution: string;
-    date: string;
-    time: string;
-    therapistId: string;
-    clinic: string;
-  }>({
+  } = useForm<EvolutionFormProps>({
     defaultValues: {
       evolution: "",
       date: format(new Date(), "yyyy-MM-dd"),
@@ -41,13 +37,36 @@ const ModalClinic = ({
       therapistId: userId,
       clinic: clinic,
     },
-    resolver: yupResolver(evolutionPatientSchema),
+    resolver: zodResolver(evolutionPatientSchema),
   });
 
-  const handleSubmitEvolution = (data: EvolutionFormProps) => {
-    console.log(data);
-    // Add evolution to database
-    setOpenModal(false);
+  console.log(errors);
+
+  const handleSubmitEvolution = async (data: EvolutionFormProps) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("therapistId", data.therapistId);
+      formData.append("clinic", data.clinic);
+      formData.append("evolution", data.evolution);
+      formData.append("date", data.date);
+      formData.append("time", data.time);
+
+      if (data.file && data.file.length > 0) {
+        //@ts-ignore
+        formData.append("file", data.file[0]);
+      }
+
+      await fetch(`/api/evolution/${uid}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      toast.success("Evolução cadastrado com sucesso!");
+      setOpenModal(false);
+    } catch (error) {
+      toast.error("Ocorreu um erro ao cadastrar evolução!");
+    }
   };
 
   return (
@@ -88,22 +107,28 @@ const ModalClinic = ({
 
           <label
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-4"
-            htmlFor="file_input"
+            htmlFor="file"
           >
             Anexar arquivo
           </label>
           <input
             className="block bg-zinc-700 w-full text-sm text-gray-300 border 
             border-gray-600 rounded-lg cursor-pointer focus:outline-none p-1"
-            id="file_input"
+            id="file"
             type="file"
+            {...register("file")}
           />
 
-          <Button text="Enviar" type="submit" className="mt-4" />
+          <Button
+            text="Enviar"
+            type="submit"
+            className="mt-4"
+            loading={isSubmitting}
+          />
         </form>
       </div>
     </Modal>
   );
 };
 
-export default ModalClinic;
+export default ModalEvolution;

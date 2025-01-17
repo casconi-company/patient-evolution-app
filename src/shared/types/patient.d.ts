@@ -32,6 +32,7 @@ declare type EvolutionFormProps = {
   time: string;
   evolution: string;
   patientId: string;
+  clinic: string;
   therapistId: string;
   fileId?: string;
   file?: Buffer;

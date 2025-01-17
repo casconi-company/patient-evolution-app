@@ -1,9 +1,9 @@
 import { Storage } from "@google-cloud/storage";
-import path from "path";
+import fs from "fs";
 
 // Inicializa o cliente do Google Cloud Storage
 const storage = new Storage({
-  keyFilename: process.env.GCLOUD_KEYFILE,
+  credentials: JSON.parse(process.env.GCLOUD_KEYFILE || "{}"),
   projectId: process.env.GCLOUD_PROJECT_ID,
 });
 
@@ -13,17 +13,21 @@ const bucket = storage.bucket(bucketName!);
 
 /**
  * Faz upload de um arquivo ao bucket.
- * @param {string} filename - Nome do arquivo local.
+ * @param {string} fileName - Nome do arquivo local.
  * @param {string} destination - Nome do arquivo no bucket.
  */
-export async function uploadFile(filename: string, destination: string) {
+export async function uploadFile(fileName: string, destination: string) {
   try {
-    await bucket.upload(filename, {
+    if (!fs.statSync(fileName).isFile()) {
+      throw new Error("O caminho especificado não é um arquivo válido");
+    }
+
+    await bucket.upload(fileName, {
       destination,
     });
-    console.log(`${filename} foi enviado para o bucket ${bucketName}`);
   } catch (error) {
     console.error("Erro ao fazer upload:", error);
+    throw new Error();
   }
 }
 
@@ -35,7 +39,7 @@ export async function uploadFile(filename: string, destination: string) {
  */
 export async function generateSignedUrl(
   fileName: string,
-  expiresIn: number = 3600 // Padrão: 1 hora
+  expiresIn: number = 7200 // Padrão: 2 hora
 ): Promise<string> {
   const options = {
     version: "v4" as const,
